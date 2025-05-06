@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Firman Aydo Saputra - Professional Portfolio</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: 'Poppins', sans-serif;
+    color: #212529;
+    overflow-x: hidden;
+  }
+
+  body {
+    max-width: 350px;
+    max-height: 600px;
+    margin: 0 auto;
+    padding-top: 56px; /* nav height */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: transparent;
+  }
+
+  a {
+    color: #ccccee;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover, a:focus {
+    color: #e0e0ff;
+    outline: none;
+  }
+
+  /* Header Navigation */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 1500;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    color: #333;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    user-select: none;
+  }
+
+  nav {
+    display: flex;
+    gap: 14px;
+  }
+
+  nav a {
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: #333;
+  }
+  nav a.active,
+  nav a:hover,
+  nav a:focus {
+    background-color: #667eea;
+    color: white;
+  }
+
+  /* Mobile nav toggle */
+  .nav-toggle {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 22px;
+    width: 22px;
+    transition: transform 0.3s ease;
+  }
+  .nav-toggle span {
+    display: block;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Responsive nav */
+  @media (max-width: 400px) {
+    nav {
+      position: fixed;
+      top: 56px;
+      right: 0;
+      background: rgba(255,255,255,1);
+      height: calc(100% - 56px);
+      width: 200px;
+      flex-direction: column;
+      gap: 0;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+      padding-top: 20px;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      color: #333;
+    }
+    nav.open {
+      transform: translateX(0);
+    }
+    nav a {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .nav-toggle {
+      display: flex;
+    }
+  }
+
+  /* Main content sections */
+  main {
+    padding: 15px 20px 30px 20px;
+  }
+
+  section {
+    margin-bottom: 30px;
+    outline-offset: -4px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    color: #e0e0ff;
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  section:target {
+    outline: 3px solid #a0a6f8;
+    outline-offset: 4px;
+    scroll-margin-top: 70px;
+  }
+
+  h1, h2, h3 {
+    color: #d0d4f8;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 1.9rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  p, li {
+    font-size: 1rem;
+    color: #c0c5ff;
+    line-height: 1.5;
+  }
+
+  /* About & Home */
+  #home p,
+  #about p {
+    margin-bottom: 15px;
+  }
+
+  /* Image styles */
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #a0a6f8;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* Certificates section carousel styles */
+
+  .certificates-carousel {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  .certificates-container {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 5px;
+  }
+
+  .certificates-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  .certificates-container::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+  }
+  .certificates-container::-webkit-scrollbar-thumb {
+    background-color: #a0a6f8;
+    border-radius: 4px;
+  }
+
+  .certificate-item {
+    flex: 0 0 70%;
+    max-width: 70%;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    background-color: rgba(255,255,255,0.2);
+    color: #000;
+  }
+  .certificate-item.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .certificate-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+  }
+  .certificate-caption {
+    font-size: 0.85rem;
+    color: #eee;
+    text-align: center;
+    padding: 6px 8px;
+  }
+
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #a0a6f8;
+    color: #333;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(160, 166, 248, 0.6);
+    transition: background-color 0.3s ease;
+    user-select: none;
+    z-index: 10;
+  }
+  .carousel-button:hover,
+  .carousel-button:focus {
+    background: #7a7ee5;
+    outline: none;
+  }
+  .carousel-button:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .carousel-button.prev {
+    left: 6px;
+  }
+  .carousel-button.next {
+    right: 6px;
+  }
+
+  /* Education */
+  .education-item {
+    margin-bottom: 15px;
+  }
+  .education-item span {
+    display: block;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #ccc;
+  }
+
+  /* Experience section */
+  .experience-item {
+    margin-bottom: 18px;
+  }
+  .experience-item h3 {
+    margin-bottom: 4px;
+  }
+  .experience-item span {
+    display: block;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .experience-item p {
+    font-size: 0.95rem;
+    color: #ddd;
+  }
+
+  /* Projects */
+  .project-item {
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    color: #ddd;
+  }
+  .project-item:hover,
+  .project-item:focus-within {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  .project-item a {
+    font-weight: 600;
+    margin-top: 8px;
+    display: inline-block;
+    color: #cacaff;
+  }
+
+  /* Skills Section */
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .skill-card {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(255,255,255,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    text-shadow: 0 0 4px rgba(0,0,0,0.5);
+  }
+
+  .skill-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 6px;
+    animation: bounce 2.5s infinite ease-in-out;
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.7));
+  }
+
+  /* Bounce animation */
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Contact */
+  #contact p {
+    margin-bottom: 12px;
+  }
+  .contact-button {
+    display: inline-block;
+    background: #a0a6f8;
+    color: #333;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(160, 166, 248, 0.6);
+    transition: background-color 0.3s ease;
+  }
+  .contact-button:hover,
+  .contact-button:focus {
+    background: #7a7ee5;
+    outline: none;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" tabindex="0">Firman Aydo Saputra</div>
+  <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <nav id="primary-navigation" aria-label="Primary navigation">
+    <a href="#home" class="active" tabindex="0">Home</a>
+    <a href="#about" tabindex="0">About</a>
+    <a href="#education" tabindex="0">Education</a>
+    <a href="#experience" tabindex="0">Experience</a>
+    <a href="#projects" tabindex="0">Projects</a>
+    <a href="#skills" tabindex="0">Skills</a>
+    <a href="#certificates" tabindex="0">Certificates</a>
+    <a href="#contact" tabindex="0">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="home" tabindex="0" aria-label="Home section" class="animate">
+    <h1>Hi, I'm Firman Aydo Saputra</h1>
+    <p>Welcome to my professional portfolio. I have an interest in Data Science, managing data into very important information by analyzing data in mathematical calculations and also creating data visualizations so that data can be easily understood.</p>
+  </section>
+
+  <section id="about" tabindex="0" aria-label="About me section" class="animate">
+    <h2>About Me</h2>
+    <img src="images/WhatsApp Image 2025-05-06 at 08.27.20.jpeg" alt="Profile photo of Firman Aydo Saputra" class="profile-photo" />
+    <p>I'm a Data Science student at the University of Muhammadiyah North Sumatra. I really like coding and doing data analysis, although I am still new to this field, but my strong desire to learn is a motivation so that I never get bored and give up while studying.</p>
+  </section>
+
+  <section id="education" tabindex="0" aria-label="Education section" class="animate">
+    <h2>Education</h2>
+    <div class="education-item" tabindex="0">
+      <h3>Majoring of Data Science</h3>
+      <span>Universitas Muhammadiyah Sumatra Utara — 2024-Now</span>
+    </div>
+    <div class="education-item" tabindex="0">
+      <h3>SMA Negeri 3 Kota Tebingtinggi</h3>
+      <span>IPS (Ilmu Pengetahuan Sosial) — 2021-2024</span>
+    </div>
+  </section>
+
+  <section id="experience" tabindex="0" aria-label="Experience section" class="animate">
+    <h2>Experience</h2>
+    <div class="experience-item" tabindex="0">
+      <h3>Frelance Database - Briliance Group</h3>
+      <span>June 2023 - 2023</span>
+      <p>I work by processing sales data, purchasing transactions, and also being an admin in this company.</p>
+    </div>
+  </section>
+
+  <section id="projects" tabindex="0" aria-label="Projects section" class="animate">
+    <h2>Projects</h2>
+    <article class="project-item" tabindex="0">
+      <h3>Portfolio Website</h3>
+      <p>A clean portfolio site built with modern HTML, CSS and vanilla JavaScript.</p>
+      <a href="https://github.com/firman-aydo/firman-aydo" target="_blank" rel="noopener">View on GitHub</a>
+    </article>
+    <article class="project-item" tabindex="0">
+      <h3>Todo App</h3>
+      <p>Simple todo application with persistence and a responsive design.</p>
+      <a href="https://github.com/firman-aydo/project-cv" target="_blank" rel="noopener">View on GitHub</a>
+    </article>
+  </section>
+
+  <section id="skills" tabindex="0" aria-label="Skills section" class="animate">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card" tabindex="0" title="Python">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python Icon" />
+        <div>Python</div>
+      </div>
+      <div class="skill-card" tabindex="0" title="R">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/768px-R_logo.svg.png" alt="R Language Icon" style="width:40px; height:40px; margin-bottom:6px;" />
+        <div>R</div>
+      </div>
+      <div class="skill-card" tabindex="0" title="Pandas">
+        <img src="https://pandas.pydata.org/static/img/pandas.svg" alt="Pandas Icon" style="width:40px; height:40px; margin-bottom:6px;" />
+        <div>Pandas</div>
+      </div>
+      <div class="skill-card" tabindex="0" title="NumPy">
+        <img src="https://numpy.org/images/logo.svg" alt="NumPy Icon" style="width:40px; height:40px; margin-bottom:6px;" />
+        <div>NumPy</div>
+      </div>
+      <div class="skill-card" tabindex="0" title="Microsoft Word">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Microsoft_Office_Word_%282019%E2%80%93present%29.svg" alt="Microsoft Word Icon" style="width:40px; height:40px; margin-bottom:6px;" />
+        <div>Word</div>
+      </div>
+      <div class="skill-card" tabindex="0" title="Microsoft Excel">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg" alt="Microsoft Excel Icon" style="width:40px; height:40px; margin-bottom:6px;" />
+        <div>Excel</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certificates" tabindex="0" aria-label="Certificates section" class="animate">
+    <h2>Certificates</h2>
+    <div class="certificates-carousel" aria-label="Certificates gallery with carousel">
+      <button class="carousel-button prev" aria-label="Scroll certificates left" tabindex="0">&#8249;</button>
+      <div class="certificates-container">
+        <div class="certificate-item" tabindex="0">
+          <img src="images/WhatsApp Image 2025-05-06 at 07.29.49 (1).jpeg" alt="Certificate 1 - Fullstack Web Development" />
+          <div class="certificate-caption">Fullstack Web Development</div>
+        </div>
+        <div class="certificate-item" tabindex="0">
+          <img src="images/WhatsApp Image 2025-05-06 at 07.29.49.jpeg" alt="Certificate 2 - Advanced JavaScript" />
+          <div class="certificate-caption">Advanced JavaScript</div>
+        </div>
+        <div class="certificate-item" tabindex="0">
+          <img src="images/WhatsApp Image 2025-05-06 at 07.29.50.jpeg" alt="Certificate 3 - React Development" />
+          <div class="certificate-caption">React Development</div>
+        </div>
+        <div class="certificate-item" tabindex="0">
+          <img src="images/WhatsApp Image 2025-05-06 at 07.33.30 (1).jpeg" alt="Certificate 4 - Node.js Backend" />
+          <div class="certificate-caption">Node.js Backend</div>
+        </div>
+        <div class="certificate-item" tabindex="0">
+            <img src="images/WhatsApp Image 2025-05-06 at 07.33.30 (2).jpeg" alt="Certificate 4 - Node.js Backend" />
+            <div class="certificate-caption">Node.js Backend</div>
+        </div>
+        <div class="certificate-item" tabindex="0">
+            <img src="images/WhatsApp Image 2025-05-06 at 07.33.31.jpeg" alt="Certificate 4 - Node.js Backend" />
+            <div class="certificate-caption">Node.js Backend</div>
+        </div>
+      </div>
+      <button class="carousel-button next" aria-label="Scroll certificates right" tabindex="0">&#8250;</button>
+    </div>
+  </section>
+
+  <section id="contact" tabindex="0" aria-label="Contact section" class="animate">
+    <h2>Contact</h2>
+    <p>I'm always open to discussing new projects or opportunities. Feel free to reach out!</p>
+    <a href="mailto:firmanaydo377@gmail.com" class="contact-button" tabindex="0">Email Me</a>
+  </section>
+
+</main>
+
+<footer aria-label="Page footer">
+  <p>&copy; 2025 Firman Aydo Saputra. All rights reserved.</p>
+</footer>
+
+<script>
+  // Navigation toggle for mobile
+  const navToggle = document.querySelector('.nav-toggle');
+  const navMenu = document.querySelector('nav');
+
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+    navToggle.setAttribute('aria-expanded', !expanded);
+    navMenu.classList.toggle('open');
+  });
+
+  // Highlight nav links on scroll
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
+
+  function highlightNav() {
+    const scrollPosition = window.scrollY + 60; // offset for fixed header
+    sections.forEach(section => {
+      if (
+        scrollPosition >= section.offsetTop &&
+        scrollPosition < section.offsetTop + section.offsetHeight
+      ) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === section.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }
+  window.addEventListener('scroll', highlightNav);
+
+  // Intersection observer to reveal sections progressively
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if(entry.target.classList.contains('animate')) {
+          if(entry.target.id === 'skills') {
+            animateSkillBars();
+          }
+          if(entry.target.id === 'certificates') {
+            animateCertificates();
+          }
+          entry.target.classList.remove('animate');
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+
+  // Animate skill bars width
+  function animateSkillBars() {
+    const skillLevels = document.querySelectorAll('.skill-level');
+    skillLevels.forEach(bar => {
+      const width = bar.getAttribute('data-width');
+      bar.style.width = width;
+    });
+  }
+
+  // Animate certificates scaling & opacity
+  function animateCertificates() {
+    const certificates = document.querySelectorAll('.certificate-item');
+    certificates.forEach((cert, index) => {
+      setTimeout(() => {
+        cert.classList.add('visible');
+      }, index * 150);
+    });
+  }
+
+  // Initialize skill bars in case skills section is first visible
+  window.addEventListener('load', () => {
+    const skillsSection = document.getElementById('skills');
+    if(skillsSection.classList.contains('visible')) {
+      animateSkillBars();
+    }
+  });
+
+  // Carousel buttons for certificates
+  const prevBtn = document.querySelector('.carousel-button.prev');
+  const nextBtn = document.querySelector('.carousel-button.next');
+  const container = document.querySelector('.certificates-container');
+
+  prevBtn.addEventListener('click', () => {
+    container.scrollBy({left: -container.clientWidth * 0.7, behavior: 'smooth'});
+  });
+  nextBtn.addEventListener('click', () => {
+    container.scrollBy({left: container.clientWidth * 0.7, behavior: 'smooth'});
+  });
+</script>
+
+</body>
+</html>
